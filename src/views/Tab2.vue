@@ -8,13 +8,13 @@
     <ion-content :fullscreen="true">
       <ion-card>
         <ion-label>
-          <div v-bind:style="{background:setRandomColor()}" class="box color_sample"></div>
+          <div v-bind:style="{background:this.RGB}" class="box color_sample"></div>
         </ion-label>
-        <ion-segment value="all">
-          <ion-segment-button value="all">
+        <ion-segment value="dark" @ion-change="segmentChanged()">
+          <ion-segment-button value="dark">
             <ion-label>Dark</ion-label>
           </ion-segment-button>
-          <ion-segment-button value="favorites">
+          <ion-segment-button value="light">
             <ion-label>Light</ion-label>
           </ion-segment-button>
         </ion-segment>
@@ -27,28 +27,42 @@
   </ion-page>
 </template>
 
-<script lang="ts">
+<script>
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonSegment, IonIcon } from '@ionic/vue';
 import { arrowForwardOutline } from 'ionicons/icons';
 
 
 export default  {
   name: 'Tab2',
+  data() {
+    return {
+      R: 0,
+      G: 0,
+      B: 0,
+      RGB: '',
+      isDark: true
+    }
+  },
   methods: {
-    segmentChanged(ev: CustomEvent) {
-      console.log('Segment changed', ev);
-    },
     setRandomColor() {
-      const R = Math.floor(Math.random() * 255);
-      const G = Math.floor(Math.random() * 255);
-      const B = Math.floor(Math.random() * 255);
-      const RGB = "RGB(" + R + "," + G + "," + B + ")";
-      return RGB
+      this.R = Math.floor(Math.random() * 255);
+      this.G = Math.floor(Math.random() * 255);
+      this.B = Math.floor(Math.random() * 255);
+      this.RGB = "RGB(" + this.R + "," + this.G + "," + this.B + ")";
+      return this.RGB
     },
     nextColor() {
-      alert('3');
-      
+      //alert('3');
+      console.log(`R:${this.R}, G:${this.G}, B:${this.B}, isDark:${this.isDark}`);
+      this.setRandomColor()
+    },
+    segmentChanged() {
+      this.isDark = !this.isDark;
+      console.log(`${this.isDark}`);
     }
+  },
+  created: function() {
+    this.setRandomColor()
   },
   setup() {
     return {

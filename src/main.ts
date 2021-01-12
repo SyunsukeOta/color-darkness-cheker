@@ -23,6 +23,23 @@ import '@ionic/vue/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+import firebase from 'firebase'
+import 'firebase/firestore'
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAGsFmpwvTEuC9UhwFdw_APUTXEeT_H_To",
+  authDomain: "colordarknessdata.firebaseapp.com",
+  databaseURL: "https://colordarknessdata-default-rtdb.firebaseio.com",
+  projectId: "colordarknessdata",
+  storageBucket: "colordarknessdata.appspot.com",
+  messagingSenderId: "1060338265518",
+  appId: "1:1060338265518:web:ad8266f41d9f32d487ec3f",
+  measurementId: "G-10T0D76C93"
+};
+firebase.initializeApp(firebaseConfig);
+
+export const db = firebase.firestore();
+
 const app = createApp(App)
   .use(IonicVue)
   .use(router);

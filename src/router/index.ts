@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
+import { db } from "../main";
 import { RouteRecordRaw } from 'vue-router';
 import Tabs from '../views/Tabs.vue'
 
