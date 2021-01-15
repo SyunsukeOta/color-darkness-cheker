@@ -30,6 +30,8 @@
 <script>
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonSegment, IonIcon } from '@ionic/vue';
 import { arrowForwardOutline } from 'ionicons/icons';
+import { db } from "../main";
+
 
 
 export default  {
@@ -62,7 +64,14 @@ export default  {
     }
   },
   created: function() {
-    this.setRandomColor()
+    this.setRandomColor();
+    const userRef = db.collection("datas");
+    userRef.get().then(d => {
+      d.forEach(e => {
+        const data = e.data();
+        console.log(`R:${data.R}, G:${data.G}, B:${data.B}, isDark:${data.isDark}`);
+      })
+    })
   },
   setup() {
     return {
