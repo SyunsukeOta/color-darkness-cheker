@@ -19,6 +19,10 @@
           </ion-segment-button>
         </ion-segment>
       </ion-card>
+      <ion-button routerLink="/">
+        Menu
+        <ion-icon :icon="arrowBackOutline"></ion-icon>
+      </ion-button>
       <ion-button v-on:click="nextColor()">
         Next
         <ion-icon :icon="arrowForwardOutline" />
@@ -28,9 +32,10 @@
 </template>
 
 <script>
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonSegment, IonIcon } from '@ionic/vue';
-import { arrowForwardOutline } from 'ionicons/icons';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonSegment, IonIcon, IonButton } from '@ionic/vue';
+import { arrowForwardOutline, arrowBackOutline } from 'ionicons/icons';
 import { db } from "../main";
+import { useRoute } from 'vue-router';
 
 
 
@@ -42,7 +47,8 @@ export default  {
       G: 0,
       B: 0,
       RGB: '',
-      isDark: true
+      isDark: true,
+      userRef: db.collection("datas")
     }
   },
   methods: {
@@ -56,6 +62,12 @@ export default  {
     nextColor() {
       //alert('3');
       console.log(`R:${this.R}, G:${this.G}, B:${this.B}, isDark:${this.isDark}`);
+      this.userRef.add({
+        R: this.R,
+        G: this.G,
+        B: this.B,
+        isDark: this.isDark
+      }).catch(err => console.log(err));
       this.setRandomColor()
     },
     segmentChanged() {
@@ -63,21 +75,27 @@ export default  {
       console.log(`${this.isDark}`);
     }
   },
-  created: function() {
+  mounted: function() {
     this.setRandomColor();
-    const userRef = db.collection("datas");
-    userRef.get().then(d => {
-      d.forEach(e => {
-        const data = e.data();
-        console.log(`R:${data.R}, G:${data.G}, B:${data.B}, isDark:${data.isDark}`);
-      })
-    })
+    //userRef.get().then(d => {
+    //  d.forEach(e => {
+    //    const data = e.data();
+    //    console.log(`R:${data.R}, G:${data.G}, B:${data.B}, isDark:${data.isDark}`);
+    //  })
+    //})
+    //userRef.add({
+    //  R: 0,
+    //  G: 0,
+    //  B: 0,
+    //  isDark: true
+    //}).catch(err => console.log(err));
   },
   setup() {
     return {
-      arrowForwardOutline
+      arrowForwardOutline,
+      arrowBackOutline
     }
   },
-  components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonCard, IonSegment, IonIcon }
+  components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonCard, IonSegment, IonIcon, IonButton }
 }
 </script>
