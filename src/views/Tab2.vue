@@ -77,13 +77,13 @@ export default  {
   },
   mounted: function() {
     this.setRandomColor();
-    //userRef.get().then(d => {
+    //this.userRef.get().then(d => {
     //  d.forEach(e => {
     //    const data = e.data();
     //    console.log(`R:${data.R}, G:${data.G}, B:${data.B}, isDark:${data.isDark}`);
     //  })
     //})
-    //userRef.add({
+    //this.userRef.add({
     //  R: 0,
     //  G: 0,
     //  B: 0,
